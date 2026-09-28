@@ -1,12 +1,14 @@
-```html
 <!DOCTYPE html>
+
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interaktywne fiszki i quizy do nauki angielskiego.">
   <title>Quizy Fiszki Angielskie</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <header class="hero">
     <div class="container">
@@ -16,83 +18,108 @@
     </div>
   </header>
 
-  <nav class="nav">
+  <nav class="nav" aria-label="Główna nawigacja">
     <div class="container nav-inner">
-      <button class="nav-btn active" data-section="vocab">📚 Słownictwo</button>
-      <button class="nav-btn" data-section="quiz">🧠 Quiz</button>
-    </div>
+      <button type="button" class="nav-btn active" data-section="vocab" aria-selected="true">
+        📚 Słownictwo
+      </button>
+
+```
+  <button type="button" class="nav-btn" data-section="quiz" aria-selected="false">
+    🧠 Quiz
+  </button>
+</div>
+```
+
   </nav>
 
   <main class="container">
-    <section id="vocab" class="section active">
+    <section id="vocab" class="section active" aria-labelledby="vocab-title">
       <div class="section-heading">
         <div>
           <p class="eyebrow">FISZKI</p>
-          <h2>Powtórz słownictwo</h2>
-        </div>
-        <div class="stats"><span id="cardCount">0</span> słów</div>
-      </div>
-
-      <div class="filters" id="categoryFilters"></div>
-
-      <div class="flashcard-wrap">
-        <button class="arrow" id="prevCard" aria-label="Poprzednia fiszka">←</button>
-
-        <article class="flashcard" id="flashcard" tabindex="0">
-          <span class="level" id="cardLevel"></span>
-
-          <div class="card-front">
-            <small>ANGIELSKI</small>
-            <strong id="englishWord"></strong>
-            <span class="hint">Kliknij fiszkę, aby odwrócić</span>
-          </div>
-
-          <div class="card-back">
-            <small>POLSKI</small>
-            <strong id="polishWord"></strong>
-            <p id="example"></p>
-          </div>
-        </article>
-
-        <button class="arrow" id="nextCard" aria-label="Następna fiszka">→</button>
-      </div>
-
-      <p class="progress" id="cardProgress"></p>
-    </section>
-
-    <section id="quiz" class="section">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">QUIZ</p>
-          <h2>Sprawdź swoją wiedzę</h2>
+          <h2 id="vocab-title">Powtórz słownictwo</h2>
         </div>
 
-        <div class="score">
-          Wynik: <strong id="score">0</strong>
-        </div>
+```
+    <div class="stats" aria-label="Liczba słów">
+      <span id="cardCount">0</span> słów
+    </div>
+  </div>
+
+  <div class="filters" id="categoryFilters" aria-label="Kategorie słownictwa"></div>
+
+  <div class="flashcard-wrap">
+    <button type="button" class="arrow" id="prevCard" aria-label="Poprzednia fiszka">
+      ←
+    </button>
+
+    <article
+      class="flashcard"
+      id="flashcard"
+      tabindex="0"
+      role="button"
+      aria-label="Fiszka. Kliknij, aby odwrócić."
+      aria-pressed="false"
+    >
+      <span class="level" id="cardLevel"></span>
+
+      <div class="card-front">
+        <small>ANGIELSKI</small>
+        <strong id="englishWord"></strong>
+        <span class="hint">Kliknij fiszkę, aby odwrócić</span>
       </div>
 
-      <div class="quiz-box">
-        <div class="quiz-top">
-          <span id="questionNumber"></span>
-          <span id="quizCategory"></span>
-        </div>
-
-        <h3 id="question"></h3>
-
-        <div id="answers" class="answers"></div>
-
-        <div id="quizFeedback" class="feedback"></div>
-
-        <button id="nextQuestion" class="primary hidden">
-          Następne pytanie →
-        </button>
+      <div class="card-back">
+        <small>POLSKI</small>
+        <strong id="polishWord"></strong>
+        <p id="example"></p>
       </div>
+    </article>
 
-      <button id="restartQuiz" class="secondary">
-        Losuj nowy quiz
-      </button>
-    </section>
+    <button type="button" class="arrow" id="nextCard" aria-label="Następna fiszka">
+      →
+    </button>
+  </div>
+
+  <p class="progress" id="cardProgress" aria-live="polite"></p>
+</section>
+
+<section id="quiz" class="section" aria-labelledby="quiz-title">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">QUIZ</p>
+      <h2 id="quiz-title">Sprawdź swoją wiedzę</h2>
+    </div>
+
+    <div class="score" aria-label="Wynik quizu">
+      Wynik: <strong id="score">0</strong>
+    </div>
+  </div>
+
+  <div class="quiz-box">
+    <div class="quiz-top">
+      <span id="questionNumber" aria-live="polite"></span>
+      <span id="quizCategory"></span>
+    </div>
+
+    <h3 id="question"></h3>
+
+    <div id="answers" class="answers" role="group" aria-label="Odpowiedzi"></div>
+
+    <div id="quizFeedback" class="feedback" aria-live="polite"></div>
+
+    <button type="button" id="nextQuestion" class="primary hidden">
+      Następne pytanie →
+    </button>
+  </div>
+
+  <button type="button" id="restartQuiz" class="secondary">
+    Losuj nowy quiz
+  </button>
+</section>
+```
+
   </main>
 
   <footer>
@@ -102,6 +129,6 @@
   </footer>
 
   <script src="script.js"></script>
+
 </body>
 </html>
-```
