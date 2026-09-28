@@ -60,22 +60,6 @@ const quizData = [
   ["Jak po angielsku jest „znaczenie”?","meaning",["example","meaning","mistake","idea"],"Nauka"]
 ];
 
-const fillExercises = [
-  ["I usually ___ up at seven.","get"],["Please ___ me your pen.","lend"],["We need to ___ a new ticket.","buy"],
-  ["Don't ___ your keys.","forget"],["Can you ___ this word?","explain"],["I ___ English every day.","learn"],
-  ["The train ___ at six.","leaves"],["She ___ in an office.","works"],["We ___ at noon.","arrive"]
-];
-const translations = [
-  ["Przetłumacz: „To jest ważne.”","It is important."],["Przetłumacz: „Do zobaczenia jutro.”","See you tomorrow."],
-  ["Przetłumacz: „Mam pytanie.”","I have a question."],["Przetłumacz: „Uczę się angielskiego.”","I learn English."],
-  ["Przetłumacz: „Gdzie jest lotnisko?”","Where is the airport?"],["Przetłumacz: „Nie zapomnij kluczy.”","Don't forget your keys."]
-];
-const grammar = [
-  ["She ___ to work every day.",["go","goes","going"],"goes"],["They ___ dinner at eight yesterday.",["have","had","has"],"had"],
-  ["I ___ English now.",["study","am studying","studied"],"am studying"],["He ___ already finished.",["has","have","is"],"has"],
-  ["We ___ to the cinema last night.",["go","went","gone"],"went"],["I ___ never been to London.",["have","has","am"],"have"]
-];
-
 let cardIndex=0, activeCategory="Wszystkie", quizIndex=0, score=0, quizAnswered=false;
 
 const $ = id => document.getElementById(id);
@@ -117,33 +101,9 @@ function answerQuiz(btn,q){
 $("nextQuestion").onclick=()=>{quizIndex++;renderQuiz();};
 $("restartQuiz").onclick=()=>{quizIndex=0;score=0;$("score").textContent=0;renderQuiz();};
 
-function newExercises(){
-  let f=fillExercises[Math.floor(Math.random()*fillExercises.length)];
-  $("fillSentence").textContent=f[0].replace("___","_____"); $("fillAnswer").value=""; $("fillFeedback").textContent="";
-  $("fillAnswer").dataset.answer=f[1];
-  let t=translations[Math.floor(Math.random()*translations.length)];
-  $("translationPrompt").textContent=t[0]; $("translationAnswer").value=""; $("translationFeedback").textContent="";
-  $("translationAnswer").dataset.answer=t[1];
-  let g=grammar[Math.floor(Math.random()*grammar.length)];
-  $("grammarPrompt").textContent=g[0]; $("grammarFeedback").textContent="";
-  $("grammarAnswers").innerHTML=shuffle(g[1]).map(a=>`<button class="answer">${a}</button>`).join("");
-  document.querySelectorAll("#grammarAnswers .answer").forEach(b=>b.onclick=()=>{
-    document.querySelectorAll("#grammarAnswers .answer").forEach(x=>x.classList.remove("correct","wrong"));
-    if(b.textContent===g[2]){b.classList.add("correct");$("grammarFeedback").textContent="✓ Poprawnie!";$("grammarFeedback").className="feedback good";}
-    else{b.classList.add("wrong");$("grammarFeedback").textContent=`✗ Poprawna forma: ${g[2]}`;$("grammarFeedback").className="feedback bad";}
-  });
-}
-function normalize(s){return s.toLowerCase().trim().replace(/[.,!?]/g,"").replace(/\s+/g," ");}
-$("checkFill").onclick=()=>checkText($("fillAnswer"),$("fillFeedback"),"Dobrze! Poprawna odpowiedź.",`Poprawna odpowiedź: ${$("fillAnswer").dataset.answer}`);
-$("checkTranslation").onclick=()=>checkText($("translationAnswer"),$("translationFeedback"),"Dobrze! Poprawne tłumaczenie.",`Przykładowa odpowiedź: ${$("translationAnswer").dataset.answer}`);
-function checkText(input,feedback,good,bad){
-  const ok=normalize(input.value)===normalize(input.dataset.answer);
-  feedback.textContent=ok?"✓ "+good:"✗ "+bad; feedback.className="feedback "+(ok?"good":"bad");
-}
-
 document.querySelectorAll(".nav-btn").forEach(btn=>btn.onclick=()=>{
   document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active")); btn.classList.add("active");
   document.querySelectorAll(".section").forEach(s=>s.classList.remove("active")); $(btn.dataset.section).classList.add("active");
 });
-$("newExercises").onclick=newExercises;
-renderFilters(); renderCard(); renderQuiz(); newExercises();
+
+renderFilters(); renderCard(); renderQuiz();
